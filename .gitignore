@@ -1,0 +1,70 @@
+# ─── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ─── Virtual Environments ────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ─── Jupyter Notebooks ───────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ─── Model Weights (large binary files) ──────────────────────────────────
+*.pt
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.weights
+
+# ─── Dataset Images & Labels (usually too large for Git) ─────────────────
+dataset/images/
+dataset/labels/
+phase\ 1/dataset/
+spare\ data\ /
+
+# ─── YOLOv7 Run Outputs ───────────────────────────────────────────────────
+runs/
+yolov7/runs/
+
+# ─── Logs & Caches ───────────────────────────────────────────────────────
+*.log
+*.csv
+wandb/
+.cache/
+lightning_logs/
+tensorboard_logs/
+
+# ─── macOS System Files ───────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# ─── IDEs & Editors ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Temporary Files ─────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.swp
+*~

@@ -1,0 +1,10 @@
+names:
+- dumbbell
+- barbell
+- kettlebell
+- resistance_band
+- pull_up_bar
+nc: 5
+test: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/test
+train: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/train
+val: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/val

@@ -1,0 +1,5 @@
+barbell
+dumbbell
+kettlebell
+pull_up_bar
+resistance_band

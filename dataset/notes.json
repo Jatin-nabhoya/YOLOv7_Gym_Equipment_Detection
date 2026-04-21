@@ -1,0 +1,29 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "barbell"
+    },
+    {
+      "id": 1,
+      "name": "dumbbell"
+    },
+    {
+      "id": 2,
+      "name": "kettlebell"
+    },
+    {
+      "id": 3,
+      "name": "pull_up_bar"
+    },
+    {
+      "id": 4,
+      "name": "resistance_band"
+    }
+  ],
+  "info": {
+    "year": 2026,
+    "version": "1.0",
+    "contributor": "Label Studio"
+  }
+}
