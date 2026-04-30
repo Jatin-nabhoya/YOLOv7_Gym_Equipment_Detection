@@ -17,6 +17,7 @@ build/
 venv/
 env/
 ENV/
+gym-detection/
 
 # ─── Jupyter Notebooks ───────────────────────────────────────────────────
 .ipynb_checkpoints/
@@ -76,3 +77,5 @@ Icon?
 *.bak
 *.swp
 *~
+
+.CLAUDE.md

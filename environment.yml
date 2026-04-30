@@ -1,0 +1,43 @@
+name: gym-detection
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10        # 3.10 recommended — best YOLOv7 compatibility
+  - pip
+
+  - pip:
+    # ── Core Deep Learning ───────────────────────────────────────────────
+    - torch>=2.1.0
+    - torchvision>=0.16.0
+
+    # ── Computer Vision ──────────────────────────────────────────────────
+    - opencv-python>=4.8.0
+    - Pillow>=10.0.0
+    - albumentations>=1.3.0
+
+    # ── Data Science ─────────────────────────────────────────────────────
+    - numpy>=1.24.0,<2.0.0    # YOLOv7 internals not compatible with numpy 2.x
+    - scipy>=1.11.0
+    - pandas>=2.0.0
+    - scikit-learn>=1.3.0
+
+    # ── Metrics & Evaluation ─────────────────────────────────────────────
+    - torchmetrics>=1.0.0
+
+    # ── Visualization ────────────────────────────────────────────────────
+    - matplotlib>=3.7.0
+    - seaborn>=0.12.0
+
+    # ── YOLOv7 Dependencies ──────────────────────────────────────────────
+    - PyYAML>=6.0
+    - tqdm>=4.65.0
+    - requests>=2.31.0
+    - thop>=0.1.1              # FLOPs / param counter
+    - protobuf>=3.20.0,<4.0.0  # YOLOv7 serialisation
+
+    # ── Notebook & Dev ───────────────────────────────────────────────────
+    - jupyter>=1.0.0
+    - ipykernel>=6.25.0
+    - ipython>=8.0.0
