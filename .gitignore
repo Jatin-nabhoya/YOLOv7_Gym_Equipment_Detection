@@ -46,8 +46,10 @@ yolov7/
 phase\ 1/yolov7/
 Phase\ 2/yolov7.pt
 
-# ─── YOLOv7 Run Outputs ───────────────────────────────────────────────────
+# ─── YOLOv7 Run Outputs & Generated Data ─────────────────────────────────
 runs/
+results/
+dataset_augmented/
 
 # ─── Logs & Caches ───────────────────────────────────────────────────────
 *.log
