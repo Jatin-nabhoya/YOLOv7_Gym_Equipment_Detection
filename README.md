@@ -1,15 +1,13 @@
-# 🏋️ YOLOv7 Gym Equipment Detection
+# YOLOv7 Gym Equipment Detection
 
-A custom object detection pipeline built on **YOLOv7** to identify gym equipment in images and video. This project was completed as part of the Deep Learning course at the **University of New Hampshire (UNH)**.
+Fine-tuned YOLOv7 object detection pipeline for identifying gym equipment in images. Built as part of the Deep Learning course at the University of New Hampshire (UNH), Spring 2026.
 
 ---
 
-## 📌 Project Overview
+## Classes
 
-This project fine-tunes the YOLOv7 architecture on a custom dataset of gym equipment images to accurately detect and localize **5 classes** of gym equipment:
-
-| Class ID | Equipment |
-|----------|-----------|
+| ID | Equipment |
+|----|-----------|
 | 0 | Dumbbell |
 | 1 | Barbell |
 | 2 | Kettlebell |
@@ -18,112 +16,137 @@ This project fine-tunes the YOLOv7 architecture on a custom dataset of gym equip
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 YOLOv7_Gym_Equipment_Detection/
-├── phase 1/                     # Phase 1 — Baseline & Preprocessing
-│   ├── Project_Update1.ipynb    # Phase 1 notebook (data prep, augmentation, baseline mAP)
-│   ├── GymEquipment.ipynb       # Full Phase 1 notebook
-│   ├── dataset/                 # Phase 1 local dataset split
-│   └── yolov7/                  # YOLOv7 source (submodule)
-│
-├── Phase 2/                     # Phase 2 — Transfer Learning & Fine-tuning
-│   ├── Phase2_v1.0.ipynb        # Training with frozen backbone
-│   ├── Phase2_v2.0.ipynb        # End-to-end fine-tuning
-│   └── yolov7.pt                # Pretrained YOLOv7 weights (COCO)
-│
-├── dataset/                     # Master dataset with YOLO annotation format
-│   ├── images/
-│   │   ├── train/
-│   │   ├── val/
-│   │   └── test/
-│   ├── labels/
-│   │   ├── train/
-│   │   ├── val/
-│   │   └── test/
+├── notebooks/
+│   ├── 01_phase1_baseline.ipynb     # Data prep, augmentation, baseline inference
+│   ├── 02_phase2_finetuning.ipynb   # Optuna HP search + 2-phase fine-tuning
+│   └── archive/                     # Older iterations kept for reference
+├── dataset/
+│   ├── images/   train/ val/ test/  # 162 / 20 / 21 images
+│   ├── labels/   train/ val/ test/  # YOLO-format annotations
 │   ├── classes.txt
 │   └── data.yaml
-│
-├── docs/                        # Project proposals and reports (PDFs)
-├── best.pt                      # Best trained model checkpoint
+├── weights/                         # Model checkpoints (gitignored — not committed)
+├── docs/
+│   ├── proposal.docx
+│   ├── report.pdf
+│   └── figures/                     # Training curves, confusion matrix, etc.
+├── yolov7/                          # YOLOv7 source clone (gitignored)
 ├── requirements.txt
-├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## Quickstart
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/YOLOv7_Gym_Equipment_Detection.git
+git clone https://github.com/Jatin-nabhoya/YOLOv7_Gym_Equipment_Detection.git
 cd YOLOv7_Gym_Equipment_Detection
 ```
 
-### 2. Set Up Environment
+### 2. Set up the environment
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate        # macOS/Linux
-# .venv\Scripts\activate         # Windows
-
+source .venv/bin/activate      # macOS/Linux
 pip install -r requirements.txt
 ```
 
-### 3. Dataset Setup
+### 3. Run the notebooks in order
 
-The dataset follows the standard YOLO format. Update `dataset/data.yaml` with the absolute paths to your local `images/train`, `images/val`, and `images/test` directories before training.
+Open in Jupyter or VS Code from the `notebooks/` directory:
 
-### 4. Run the Notebooks
+```
+notebooks/01_phase1_baseline.ipynb    → data setup, baseline evaluation
+notebooks/02_phase2_finetuning.ipynb  → Optuna search + training → weights/best.pt
+```
 
-Open the notebooks in order:
+Each notebook auto-clones the YOLOv7 framework on first run. No manual setup needed beyond `pip install -r requirements.txt`.
 
-- **Phase 1**: `phase 1/Project_Update1.ipynb` — Data preparation, augmentation, baseline inference
-- **Phase 2**: `Phase 2/Phase2_v2.0.ipynb` — Transfer learning & fine-tuning
+### 4. Place model weights (optional — skip if training from scratch)
 
----
+Copy a pre-trained checkpoint into `weights/`:
 
-## 🧠 Model Architecture
-
-- **Base Model**: YOLOv7 (pretrained on COCO)
-- **Modifications**: Detection head replaced for 5 custom classes
-- **Training Strategy**:
-  - Phase 1: Frozen backbone → train detection head only
-  - Phase 2: End-to-end fine-tuning (all layers unfrozen)
+```
+weights/best.pt    ← output of 02_phase2_finetuning.ipynb
+```
 
 ---
 
-## 📊 Results
+## Methodology
 
-| Stage | Description |
-|-------|-------------|
-| Baseline | Pretrained YOLOv7 inference (no fine-tuning) |
-| Phase 2 v1 | Frozen backbone, 5 epochs |
-| Phase 2 v2 | Full fine-tuning, best checkpoint saved to `best.pt` |
+### Phase 1 — Baseline
 
----
+- Loaded pretrained YOLOv7 (COCO) without fine-tuning
+- Confirmed near-zero mAP on gym equipment (expected — wrong domain)
+- Built custom dataset loader with augmentations (flip, color jitter, mosaic)
 
-## 📦 Dependencies
+### Phase 2 — Fine-tuning
 
-See [`requirements.txt`](requirements.txt) for the full list. Key packages:
-
-- `torch` / `torchvision`
-- `opencv-python`
-- `numpy`, `matplotlib`, `Pillow`
-- `PyYAML`, `tqdm`, `scipy`
+- **Optuna hyperparameter search** (30 trials): learning rate, weight decay, batch size, augmentation strength
+- **2-phase training**:
+  1. Freeze backbone, train detection head (warm-up)
+  2. Unfreeze all layers, full end-to-end fine-tuning (50 epochs, early stopping at patience=15)
+- **TTA (Test-Time Augmentation)** at evaluation
 
 ---
 
-## 📝 Course Information
+## Results
+
+| Stage | mAP@0.5 | mAP@0.5:0.95 |
+|-------|---------|---------------|
+| Baseline (COCO pretrained) | 0.0005 | 0.0001 |
+| Phase 2 v1 (frozen backbone) | ~0.20 | — |
+| Phase 2 v2 (full fine-tuning) | ~0.45 | — |
+| Phase 2 v3 (Optuna + 2-phase) | best | see report |
+
+See [`docs/report.pdf`](docs/report.pdf) for full results and figures.
+
+---
+
+## Dataset
+
+- **203 images** across 5 gym equipment classes, custom-collected
+- **Split**: 162 train / 20 val / 21 test
+- **Format**: YOLO (normalized `class x_center y_center width height` per line)
+- Dataset images and labels are gitignored due to size — contact the team for access
+
+---
+
+## Dependencies
+
+See [`requirements.txt`](requirements.txt). Key packages:
+
+- `torch` / `torchvision` >= 2.0
+- `opencv-python`, `Pillow`, `albumentations`
+- `numpy`, `matplotlib`, `seaborn`
+- `scikit-learn`, `torchmetrics`
+- `optuna` (hyperparameter search)
+- `PyYAML`, `tqdm`
+
+---
+
+## Architecture
+
+- **Base**: YOLOv7 pretrained on COCO (WongKinYiu/yolov7)
+- **Modification**: Detection head replaced for 5 custom classes
+- **Framework**: PyTorch, custom training loop (not YOLOv7's `train.py`)
+
+---
+
+## Course Information
 
 - **Course**: Deep Learning — University of New Hampshire (UNH)
 - **Semester**: Spring 2026
 
 ---
 
-## 📄 License
+## License
 
-This project is for academic purposes. The YOLOv7 architecture is developed by [WongKinYiu](https://github.com/WongKinYiu/yolov7) and is used under its original license.
+Academic use only. YOLOv7 architecture by [WongKinYiu](https://github.com/WongKinYiu/yolov7), used under its original license.

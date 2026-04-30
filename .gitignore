@@ -30,15 +30,23 @@ ENV/
 *.tflite
 *.weights
 
+# ─── Model Weights Directory ─────────────────────────────────────────────
+weights/*.pt
+weights/*.pth
+
 # ─── Dataset Images & Labels (usually too large for Git) ─────────────────
 dataset/images/
 dataset/labels/
 phase\ 1/dataset/
 spare\ data\ /
 
+# ─── YOLOv7 Clones (nested git repos) ────────────────────────────────────
+yolov7/
+phase\ 1/yolov7/
+Phase\ 2/yolov7.pt
+
 # ─── YOLOv7 Run Outputs ───────────────────────────────────────────────────
 runs/
-yolov7/runs/
 
 # ─── Logs & Caches ───────────────────────────────────────────────────────
 *.log

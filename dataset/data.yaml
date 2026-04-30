@@ -1,10 +1,11 @@
-names:
-- dumbbell
-- barbell
-- kettlebell
-- resistance_band
-- pull_up_bar
+path: ../dataset        # relative to yolov7/ — update if running from a different directory
+train: images/train
+val: images/val
+test: images/test
 nc: 5
-test: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/test
-train: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/train
-val: /Users/jatinnabhoya/Desktop/UNH/Semester 3/Deep Learning /Project/phase 1/dataset/images/val
+names:
+  - dumbbell
+  - barbell
+  - kettlebell
+  - resistance_band
+  - pull_up_bar
